@@ -80,6 +80,7 @@ class ScalarBinaryPointwiseBenchmark(Benchmark):
             ("equal", torch.equal, FLOAT_DTYPES),
             ("floor_divide", torch.floor_divide, INT_DTYPES),
             ("fmin", torch.fmin, FLOAT_DTYPES),
+            ("gcd", torch.gcd, INT_DTYPES),
             ("ge", torch.ge, FLOAT_DTYPES),
             ("greater", torch.greater, FLOAT_DTYPES),
             ("gt", torch.gt, FLOAT_DTYPES),
