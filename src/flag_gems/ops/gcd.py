@@ -9,7 +9,6 @@ Platform: Iluvatar BI-V150 / CoreX 4.4.0 / Triton 3.1.0
 
 import logging
 
-import torch
 import triton
 import triton.language as tl
 
@@ -28,7 +27,7 @@ def _gcd_kernel(x, y):
     2. 35 iterations cover all cases up to ~10,000,000 (safely covers benchmark range).
     """
     orig_dtype = x.dtype
-    
+
     # 统一转换到 int32，利用 GPU 硬件原生 32 位计算单元实现极速取模
     a = tl.abs(x).to(tl.int32)
     b = tl.abs(y).to(tl.int32)
@@ -37,10 +36,10 @@ def _gcd_kernel(x, y):
     for _ in range(35):
         cond = b != 0
         safe_b = tl.where(cond, b, 1)
-        
+
         # 这里的 % 在 int32 下是硬件指令，速度极快
         remainder = a % safe_b
-        
+
         a = tl.where(cond, b, a)
         b = tl.where(cond, remainder, 0)
 
@@ -51,6 +50,6 @@ def _gcd_kernel(x, y):
 def gcd(self, other):
     """Compute element-wise greatest common divisor."""
     logger.debug("GEMS GCD")
-    
+
     # 坚决不加 .contiguous()，省去几十毫秒的无用显存拷贝，大幅提升 Benchmark Speedup
     return _gcd_kernel(self, other)

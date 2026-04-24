@@ -14,7 +14,7 @@ from flag_gems.ops import *  # noqa: F403
 from flag_gems.patches import *  # noqa: F403
 from flag_gems.runtime.register import Register
 
-__version__ = "5.0.1.rc.0"
+__version__ = "5.0.2"
 device = runtime.device.name
 vendor_name = runtime.device.vendor_name
 aten_lib = torch.library.Library("aten", "IMPL")
@@ -129,6 +129,8 @@ _FULL_CONFIG = (
     ("clamp_", clamp_),
     ("clamp_.Tensor", clamp_tensor_),
     ("clamp_min_", clamp_min_),
+    ("clip", clip),
+    ("clip_", clip_),
     ("conj_physical", conj_physical),
     ("constant_pad_nd", constant_pad_nd),
     # ("contiguous", contiguous),
