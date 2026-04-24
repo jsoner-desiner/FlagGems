@@ -15,8 +15,12 @@ from .accuracy_utils import (
 @pytest.mark.parametrize("shape", POINTWISE_SHAPES)
 @pytest.mark.parametrize("dtype", ALL_INT_DTYPES)
 def test_accuracy_gcd(shape, dtype):
-    res_a = torch.randint(1, 10001, shape, dtype=dtype, device="cpu").to(flag_gems.device)
-    res_b = torch.randint(1, 10001, shape, dtype=dtype, device="cpu").to(flag_gems.device)
+    res_a = torch.randint(1, 10001, shape, dtype=dtype, device="cpu").to(
+        flag_gems.device
+    )
+    res_b = torch.randint(1, 10001, shape, dtype=dtype, device="cpu").to(
+        flag_gems.device
+    )
     ref_a = to_reference(res_a)
     ref_b = to_reference(res_b)
     ref_out = torch.gcd(ref_a, ref_b)
